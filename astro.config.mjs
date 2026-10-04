@@ -15,7 +15,9 @@ const shikiConfig = /** @type {const} */ ({
 });
 
 export default defineConfig({
-  site: siteConfig.siteUrl,
+//  site: siteConfig.siteUrl,
+  site: 'https://marcopagliarulo.github.io',
+  base: '/drupheus-dev',
   integrations: [
     sitemap({
       filter: (page) => page !== new URL("/search/", siteConfig.siteUrl).toString(),
