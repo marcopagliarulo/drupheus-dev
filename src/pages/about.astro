@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+import { authorSlug, getAllAuthors, visiblePosts } from "@/lib/posts";
+
+const allPosts = visiblePosts(await getCollection("posts"));
+const authors = getAllAuthors(allPosts);
+---
+
+<BaseLayout
+  title="About"
+  description={`About ${siteConfig.name} — what it publishes and who writes it.`}
+>
+  <SiteHeader posts={allPosts} />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">About</p>
+        <h1 class="pagehead-title">{siteConfig.name}</h1>
+        <p class="pagehead-description">{siteConfig.about}</p>
+      </header>
+
+      <div class="prose">
+        <h2>What gets published here</h2>
+        <p>
+          From small tips to general considerations on the software industry, with a special look to Drupal.
+        </p>
+
+        <h2>How it is written</h2>
+        <p>
+          Every post is written with the idea in mind that this is a blog from a tech guy to other tech guys.
+          I commit to remaining authentic; all posts will always be written by me.
+          I'll commit my free time, because if you decide to spend your precious time reading my posts, 
+          the least I can do is put in at least the same effort.
+          You will never find here LLM Generated post, just traditional spell-checking.
+          The posts will never be written for SEO, nor the `The 15 best` ... series.
+
+          My aim is not success, just to help, as I got help during my career from many other tech bloggers.
+        </p>
+
+        <h2>Get in touch</h2>
+        <p>
+          Questions, corrections, and requests are welcome through the <a href="/contact/">contact page</a>.
+        </p>
+        {
+          siteConfig.email && (
+            <p>You can also email <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> directly.</p>
+          )
+        }
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

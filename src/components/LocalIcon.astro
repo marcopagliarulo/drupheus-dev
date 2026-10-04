@@ -1,0 +1,54 @@
+---
+/**
+ * Renders an icon by name, inlined as SVG at build time (no client JS).
+ */
+
+interface Props {
+  name: string;
+  className?: string;
+  strokeWidth?: number;
+}
+
+const { name, className = "h-4 w-4", strokeWidth = 1.75 } = Astro.props;
+
+const localFiles = import.meta.glob<string>("../icons/**/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+const localIcons = new Map<string, { svg: string; path: string }>();
+for (const [path, svg] of Object.entries(localFiles)) {
+  const key = path.split("/").pop()!.replace(/\.svg$/, "");
+  const existing = localIcons.get(key);
+  if (existing) {
+    throw new Error(
+      `[LocalIcon] Two local icons are named "${key}": ${existing.path} and ${path}. Rename one of them.`,
+    );
+  }
+  localIcons.set(key, { svg, path });
+}
+
+// An outline SVG declares fill="none" on its root; everything else is a filled glyph.
+const isOutline = (svg: string) => /<svg\b[^>]*\bfill\s*=\s*["']none["']/i.test(svg);
+
+const local = localIcons.get(name);
+
+if (!local) {
+  throw new Error(
+    `[LocalIcon] Unknown icon "${name}". Add ${name}.svg under src/icons/.`,
+  );
+}
+---
+
+{
+  <span
+    class:list={[
+      "inline-grid place-items-center [&>svg]:h-full [&>svg]:w-full",
+      isOutline(local.svg) ? "[&>svg]:fill-none" : "[&>svg]:fill-current",
+      className,
+    ]}
+    aria-hidden="true"
+    set:html={local.svg}
+  />
+}
