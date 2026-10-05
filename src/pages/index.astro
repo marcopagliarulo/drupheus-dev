@@ -1,11 +1,14 @@
 ---
 import { getCollection } from "astro:content";
-import NewsletterSignup from "@/components/NewsletterSignup.astro";
+// import NewsletterSignup from "@/components/NewsletterSignup.astro";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import PostCard from "@/components/PostCard.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { siteConfig } from "@/config/site";
+import rehypeExternalLinks from "rehype-external-links";
+import { ArrowUpRight } from "@lucide/astro";
+import { externalLinks, siteConfig } from "@/config/site";
 import { categoryHref, getCategoryList, getFeatured, visiblePosts } from "@/lib/posts";
 
 const allPosts = visiblePosts(await getCollection("posts"));
@@ -14,6 +17,10 @@ const feed = rest.slice(0, 8);
 const featured = getFeatured(allPosts, 4).filter((post) => post.id !== latest?.id);
 const categoryList = getCategoryList(allPosts);
 const hasMore = rest.length > feed.length;
+const processor = await createMarkdownProcessor({
+  rehypePlugins: [[rehypeExternalLinks, externalLinks]],
+});
+
 ---
 
 <BaseLayout>
@@ -78,6 +85,23 @@ const hasMore = rest.length > feed.length;
                         {category.count} {category.count === 1 ? "post" : "posts"}
                       </span>
                     </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {siteConfig.projects.length > 0 && (
+            <section aria-labelledby="projects-heading">
+              <h2 id="projects-heading" class="section-title">My Open Source projects</h2>
+              <ul class="grid gap-4">
+                {siteConfig.projects.map(async (project) => (
+                  <li>
+                    <a href={project.href} class="external-link-icon link-title flex items-center gap-1">
+                      <span class="link-title__text text-base font-semibold tracking-tight">{project.name}</span>
+                      <ArrowUpRight/>
+                      <span class="sr-only">(opens in a new tab)</span>
+                    </a>
+                    <p class="text-xs text-muted-foreground" set:html={(await processor.render(project.description)).code}></p>
                   </li>
                 ))}
               </ul>

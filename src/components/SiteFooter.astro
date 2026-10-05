@@ -1,6 +1,7 @@
 ---
 import LocalIcon from "@/components/LocalIcon.astro";
 import { footerNavigation, siteConfig } from "@/config/site";
+import { ArrowUpRight } from "@lucide/astro";
 
 const socials = siteConfig.socials.map((item) => ({
   ...item,
@@ -48,7 +49,15 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <p class="text-xs text-muted-foreground md:text-right">
-      Built with <a href="https://astro.build/" rel="noreferrer" class="link-quiet underline underline-offset-2">Astro</a>, theme derived by <a href="https://github.com/xocothemes/monograph" rel="noreferrer" class="link-quiet underline underline-offset-2">Monograph</a>
+      Built with <a href="https://astro.build/" rel="noreferrer" class="external-link-icon link-quiet underline underline-offset-2">
+        <span>Astro</span>
+        <ArrowUpRight />
+        <span class="sr-only">(opens in a new tab)</span>
+      </a>, theme derived by <a href="https://github.com/xocothemes/monograph" rel="noreferrer" class="external-link-icon link-quiet underline underline-offset-2">
+        <span>Monograph</span>
+        <ArrowUpRight/>
+        <span class="sr-only">(opens in a new tab)</span>
+      </a>
     </p>
   </div>
 </footer>

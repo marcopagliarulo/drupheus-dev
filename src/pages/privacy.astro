@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+import { visiblePosts } from "@/lib/posts";
+
+const allPosts = visiblePosts(await getCollection("posts"));
+---
+
+<BaseLayout title="Privacy" description={`Privacy policy for ${siteConfig.name}.`}>
+  <SiteHeader posts={allPosts} />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Privacy</p>
+        <h1 class="pagehead-title">Privacy policy</h1>
+        <p class="pagehead-description">
+          No personal data is collected automatically.
+          All personal data collected are done voluntarely from the contact form.
+        </p>
+      </header>
+
+      <div class="prose">
+        <h2>What is collected</h2>
+        <p>
+          Aggregate and anonymous website analytics are collected by [umami](https://umami.is/),
+        </p>
+        <p>
+          This site is statically generated and sets no cookies of its own.
+          The contact form is connected to [Web3Forms](web3forms.com); that provider receives the details you submit.
+        </p>
+
+        <h2>How it is used</h2>
+        <p> 
+          Anonymous and aggregated website analytics are collected solely for the purpose of analysing website usage.
+          Submitted details from the contact form are used only to reply to you or to send the emails you asked for.
+
+          All data collected or sent through the contact form is not sold or shared for advertising.
+        </p>
+
+        <h2>Your reading preference</h2>
+        <p>
+          The light or dark reading mode you pick is stored in your browser's local storage under
+          <code>drupheus-theme</code>. It never leaves your device and you can clear it at any time.
+        </p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

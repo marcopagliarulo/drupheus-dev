@@ -92,18 +92,27 @@ const structuredData = {
   <main id="content" class="outer">
     <article>
       <header class="canvas pt-10 md:pt-14">
-        <p class="meta post-meta">
-          <span class="post-meta__byline">
-            By <a href={authorHref} class="link-sweep post-meta__link">{data.author.name}</a> in{" "}
-            {data.categories.map((category) => (
-              <a href={categoryHref(category)} class="link-sweep post-meta__link">{category}</a>
-            ))}
-          </span>
+        <div class="meta post-meta">
+          <div class="post-meta__byline">
+            By <a href={authorHref} class="link-sweep post-meta__link">{data.author.name}</a>
+            {data.categories.length > 0 && (
+              <>
+                {" "}in{" "}
+                <ol class="post-meta__categories">
+                  {data.categories.map((category) => (
+                    <li>
+                      <a href={categoryHref(category)} class="link-sweep post-meta__link">{category}</a>
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
+          </div>
           <span class="post-meta__dates">
             <span class="meta-accent"><time datetime={data.date.toISOString()}>{formatDate(data.date, "long")}</time></span>
             <span>{readingLabel(post)}</span>
           </span>
-        </p>
+        </div>
 
         <h1 class="article-title">{data.title}</h1>
         <p class="article-excerpt">{data.excerpt}</p>
@@ -275,6 +284,20 @@ const structuredData = {
        inline text and keeps normal word spacing instead of the flex gap. */
     .post-meta__byline {
       display: inline;
+    }
+    .post-meta__categories {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .post-meta__categories li {
+      display: inline;
+    }
+
+    .post-meta__categories li + li::before {
+      content: ", ";
     }
 
     .post-meta__link {

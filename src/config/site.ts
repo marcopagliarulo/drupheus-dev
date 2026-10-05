@@ -1,3 +1,6 @@
+import { type Options as ExternalLinksOptions } from "rehype-external-links";
+import type { ElementContent } from "hast";
+
 export const siteConfig = {
   /** Wordmark shown in the header and footer. */
   name: "Drupheus.dev",
@@ -42,6 +45,11 @@ export const siteConfig = {
     { label: "Linkedin", href: "https://www.linkedin.com/in/marcopagliarulo" },
     { label: "RSS", href: "/rss.xml" },
   ],
+  projects: [
+    { name: "@climbr", href: "https://www.npmjs.com/package/@climbr/core", description: "A TypeScript-first framework for building Node.js CLI tools" },
+    { name: "Protected Pages Extra", href: "https://www.drupal.org/project/protected_pages_extra", description: "Drupal module that protects pages with a simple password" },
+    { name: "LocalGov Microsites Sitemap", href: "https://www.drupal.org/project/localgov_microsites_sitemap", description: "Drupal module that integrates [Simple XML sitemap](https://www.drupal.org/project/simple_sitemap) with [LocalGov Drupal Microsites](https://www.drupal.org/project/localgov_microsites)" }
+  ]
 };
 
 /** Header navigation. Add or remove entries freely; the header renders them in order. */
@@ -53,5 +61,41 @@ export const navigation = [
 
 /** Secondary navigation rendered in the footer. */
 export const footerNavigation = [
+  { label: "Contact", href: "/contact/" },
+  { label: "Privacy", href: "/privacy/" },
   { label: "RSS", href: "/rss.xml" },
 ];
+
+const newTabNote: ElementContent = {
+  type: "element",
+  tagName: "span",
+  properties: { className: ["sr-only"] },
+  children: [{ type: "text", value: " (opens in a new tab)" }],
+};
+
+/** Lucide's `arrow-up-right`, matching what "@astro/lucide" renders. */
+const arrowUpRight: ElementContent = {
+  type: "element",
+  tagName: "svg",
+  properties: {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.75",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    ariaHidden: "true",
+  },
+  children: [
+    { type: "element", tagName: "path", properties: { d: "M7 7h10v10" }, children: [] },
+    { type: "element", tagName: "path", properties: { d: "M7 17 17 7" }, children: [] },
+  ],
+};
+
+export const externalLinks: ExternalLinksOptions = {
+  target: "_blank",
+  rel: ["noopener", "noreferrer"],
+  content: [arrowUpRight, newTabNote],
+  contentProperties: { className: ["external-link-icon"] },
+}

@@ -517,6 +517,17 @@
     color: var(--accent);
   }
 
+  .external-link-icon {
+    display: inline-flex;
+    margin-left: 0.15em;
+  }
+
+  .external-link-icon svg {
+    width: 0.9em;
+    height: 0.9em;
+    vertical-align: -0.1em;
+  }
+
   /* -------------------------------------------------------------- header --- */
   .site-header {
     position: sticky;
@@ -743,14 +754,14 @@
     font-size: 1.0625rem;
   }
 
-  .prose a {
+  .prose a, .sidebar p a {
     color: var(--accent);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
   }
 
-  .prose a:hover {
+  .prose a:hover, .sidebar p a:hover {
     color: var(--accent-strong);
   }
 
