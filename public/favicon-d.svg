@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>.ink{fill:#2a2a2e}.inks{stroke:#2a2a2e}@media (prefers-color-scheme:dark){.ink{fill:#e3e3e6}.inks{stroke:#e3e3e6}}</style>
+  <path class="ink" fill-rule="evenodd" d="M18 10h28a40 40 0 0 1 0 80H18Z M46 26C46 26 30 45 30 57a16 16 0 0 0 32 0C62 45 46 26 46 26Z"/>
+  <path fill="#c8372d" d="M46 33C46 33 35 47 35 56.5a11 11 0 0 0 22 0C57 47 46 33 46 33Z"/>
+</svg>
